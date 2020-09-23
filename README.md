@@ -28,4 +28,7 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Screenshots
+Desktop
 ![](https://raw.githubusercontent.com/VinzSpring/wetterapp/master/Screenshot%20from%202020-09-23%2014.13.24.png)
+Mobile
+![](https://github.com/VinzSpring/wetterapp/blob/master/photo5429289531087105723.jpg)
