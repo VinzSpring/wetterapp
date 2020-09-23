@@ -132,10 +132,9 @@ export default class WeatherTile extends Vue {
   }
 
   timeString(dt: number): string {
-    return new Date(dt * 1000).toLocaleDateString(undefined, {
+    return new Date(dt * 1000).toLocaleTimeString(undefined, {
       minute: "numeric",
       hour: "numeric",
-      day: "numeric",
     });
   }
 }
