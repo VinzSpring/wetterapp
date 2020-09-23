@@ -1,5 +1,5 @@
 # weather
-"Weather" is a simple, clean weather-application for mobile and Desktop.
+"Weather" is a simple, responsive and clean weather-application for mobile and Desktop.
 The forecast data is fetched from the open weather API (https://openweathermap.org/).
 Pixabay is used for automatically choosing an adequate background image according to the current weather.
 The geo location is either determined automatically or defaults to Dresden (Saxony, Germany).
