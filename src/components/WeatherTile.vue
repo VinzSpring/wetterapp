@@ -2,72 +2,73 @@
   <v-card
     color="rgb(155,155,155,0.4)"
     class="mx-auto my-auto blur"
-    :width="($vuetify.breakpoint.sm  || $vuetify.breakpoint.xs) ? '100vw' : '30vw'"
-    :height="($vuetify.breakpoint.sm  || $vuetify.breakpoint.xs) ? '100vh' : '70vh'"
+    style="overflow-y: hidden;"
+    :width="isMobile ? '100vw' : '30vw'"
+    :height="isMobile ? '100vh' : '70vh'"
   >
-  <div :style="{ height: '50vh'}">
-    <v-list-item two-line>
-      <v-list-item-content>
-        <v-list-item-title class="headline">{{weatherSummary.closestCity}}</v-list-item-title>
-        <v-list-item-subtitle>{{dateString(selectedWeather.dt)}}</v-list-item-subtitle>
-      </v-list-item-content>
-    </v-list-item>
+    <div>
+      <v-list-item two-line>
+        <v-list-item-content>
+          <v-list-item-title class="headline">{{weatherSummary.closestCity}}</v-list-item-title>
+          <v-list-item-subtitle>{{dateString(selectedWeather.dt)}}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
 
-    <v-card-text>
+      <v-card-text>
+        <v-row align="center">
+          <v-col
+            class="display-3"
+            cols="6"
+          >{{Math.round(selectedWeather.temp.max ? (selectedWeather.temp.max + selectedWeather.temp.min) / 2 : selectedWeather.temp)}}&deg;C</v-col>
+          <v-col cols="6">
+            <v-img
+              :src="`http://openweathermap.org/img/wn/${dataPoint.icon}@4x.png`"
+              width="122"
+              v-for="dataPoint in selectedWeather.weather"
+              :key="dataPoint.icon"
+            ></v-img>
+          </v-col>
+        </v-row>
+      </v-card-text>
+
       <v-row align="center">
-        <v-col
-          class="display-3"
-          cols="6"
-        >{{Math.round(selectedWeather.temp.max ? (selectedWeather.temp.max + selectedWeather.temp.min) / 2 : selectedWeather.temp)}}&deg;C</v-col>
-        <v-col cols="6">
-          <v-img
-            :src="`http://openweathermap.org/img/wn/${dataPoint.icon}@4x.png`"
-            width="122"
-            v-for="dataPoint in selectedWeather.weather"
-            :key="dataPoint.icon"
-          ></v-img>
+        <v-col class="display-3" cols="6">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>fas fa-wind</v-icon>
+            </v-list-item-icon>
+            <v-list-item-subtitle>{{selectedWeather.wind_speed}} km/h</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>fas fa-sun</v-icon>
+            </v-list-item-icon>
+            <v-list-item-subtitle>{{timeString(selectedWeather.sunrise)}}</v-list-item-subtitle>
+          </v-list-item>
+        </v-col>
+        <v-col class="display-3" cols="6">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>fas fa-water</v-icon>
+            </v-list-item-icon>
+            <v-list-item-subtitle>{{selectedWeather.humidity}} %</v-list-item-subtitle>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>fas fa-moon</v-icon>
+            </v-list-item-icon>
+            <v-list-item-subtitle>{{timeString(selectedWeather.sunset)}}</v-list-item-subtitle>
+          </v-list-item>
         </v-col>
       </v-row>
-    </v-card-text>
 
-    <v-row align="center">
-      <v-col class="display-3" cols="6">
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>fas fa-wind</v-icon>
-          </v-list-item-icon>
-          <v-list-item-subtitle>{{selectedWeather.wind_speed}} km/h</v-list-item-subtitle>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>fas fa-sun</v-icon>
-          </v-list-item-icon>
-          <v-list-item-subtitle>{{timeString(selectedWeather.sunrise)}}</v-list-item-subtitle>
-        </v-list-item>
-      </v-col>
-      <v-col class="display-3" cols="6">
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>fas fa-water</v-icon>
-          </v-list-item-icon>
-          <v-list-item-subtitle>{{selectedWeather.humidity}} %</v-list-item-subtitle>
-        </v-list-item>
-
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>fas fa-moon</v-icon>
-          </v-list-item-icon>
-          <v-list-item-subtitle>{{timeString(selectedWeather.sunset)}}</v-list-item-subtitle>
-        </v-list-item>
-      </v-col>
-    </v-row>
-
-    <v-slider v-model="dayIndex" :max="7" class="mx-4" ticks></v-slider>
-    <v-divider></v-divider>
+      <v-slider v-model="dayIndex" :max="7" class="mx-4" ticks></v-slider>
+      <v-divider></v-divider>
     </div>
     <v-list
       class="transparent"
-      :style="{height: ($vuetify.breakpoint.sm  || $vuetify.breakpoint.xs) ? '50vh' : '20vh', overflowY: 'scroll', overflowX: 'hidden', cursor: 'n-resize'}"
+      :style="{height: isMobile ? '40vh' : '20vh', overflowY: 'scroll', overflowX: 'hidden', cursor: 'n-resize', outline: 'red 1px solid'}"
     >
       <v-list-item v-for="day in weatherSummary.daily" :key="day.dt">
         <v-list-item-title>{{ dayString(day.dt) }}</v-list-item-title>
@@ -105,8 +106,8 @@ export default class WeatherTile extends Vue {
 
   private dayIndex = 0;
 
-  get breakpoint() {
-    return this.$vuetify.breakpoint.name;
+  get isMobile(): boolean {
+    return this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs;
   }
 
   get selectedWeather(): IWeatherData {
