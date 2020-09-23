@@ -68,7 +68,7 @@
     </div>
     <v-list
       class="transparent"
-      :style="{height: isMobile ? '40vh' : '20vh', overflowY: 'scroll', overflowX: 'hidden', cursor: 'n-resize', outline: 'red 1px solid'}"
+      :style="{height: isMobile ? '40vh' : '20vh', overflowY: 'scroll', overflowX: 'hidden', cursor: 'n-resize'}"
     >
       <v-list-item v-for="day in weatherSummary.daily" :key="day.dt">
         <v-list-item-title>{{ dayString(day.dt) }}</v-list-item-title>
